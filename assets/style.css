@@ -1,0 +1,71 @@
+#page {
+    display: grid;
+    column-gap: no;
+    /*border: 3px solid grey;*/
+}
+
+#left_col {
+    grid-column: 1;
+    display: grid;
+    /* border: 3px solid red; */
+    margin-left: 0px;
+}
+
+#right_col {
+    width: 700px;
+    grid-column: 2;
+    display: grid;
+    /* border: 3px solid blue */;
+}
+
+#button_parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  padding-right: 100px;
+  /*border: 3px solid green; */
+}
+
+#simulate {
+    width: 80%;
+    height: 50%;
+    font-size: 15px;
+}
+
+#graph_parent {
+    margin-top: 10px;
+    padding-top: 10px;
+    /* border: 3px solid yellow; */
+}
+
+
+#input_T_parent {
+    font-size: 15px;
+    text-align: center;
+    font-size: 15px
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row: 1;
+    /*border: 3px solid red;*/
+    padding-top: 150px;
+}
+
+#input_T {
+    width: 100%;
+}
+
+#input_dir1_parent {
+    font-size: 15px;
+    text-align: center;
+    font-size: 15px
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row: 2;
+    display: grid;
+}
+
+#box {
+    grid-column: 3;
+}
+
