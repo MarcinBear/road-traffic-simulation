@@ -101,7 +101,3 @@ def fill_zeros(data):
     data[11]['P(🡳)'] = 0
     data[12]['P(🡳)'] = 0
     return data
-
-
-if __name__ == '__main__':
-    app.run_server(debug=True)
