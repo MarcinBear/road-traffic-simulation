@@ -6,6 +6,8 @@ import simulation as sm
 from graphing_utils import *
 import dash_table
 import pandas as pd
+import io
+from base64 import b64encode
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -72,8 +74,17 @@ app.layout = html.Div(id="page", children=[
                         dcc.Input(
                             id="input_T", type="number", placeholder=100, value=100,
                             min=1, max=5000, step=1,
-                                )]),
-                        html.Div(id="input_dir1_parent", children=[table]),
+                                ),
+                        ]),
+                        html.Div(id="input_dir1_parent", children=[
+                            table,
+                            html.A(
+                               html.Button("⠀Download⠀the⠀animation⠀as⠀an⠀HTML⠀file⠀"),
+                               id="download",
+                               href="data:text/html;base64,",
+                               download="plotly_graph.html"
+                                )
+                        ]),
                         html.Div(id="box")
                      ]
                 )
@@ -102,6 +113,16 @@ def fill_zeros(data):
     data[11]['P(🡳)'] = 0
     data[12]['P(🡳)'] = 0
     return data
+
+
+@app.callback(Output('download', 'href'), Input('graph_parent', 'children'), Input('download', 'n_clicks'))
+def load_graph(graph, n):
+    fig_ = go.Figure(graph['props']['figure'])
+    buffer = io.StringIO()
+    fig_.write_html(buffer)
+    html_bytes = buffer.getvalue().encode()
+    encoded = b64encode(html_bytes).decode()
+    return "data:text/html;base64," + encoded
 
 
 if __name__ == '__main__':
