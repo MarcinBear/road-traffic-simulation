@@ -99,10 +99,18 @@ def build_figure(traffic, light_colors, add_frames=True):
         mode="text",
     ))
 
+    fig.add_trace(go.Scatter(
+        x=[14, 8, 14, 8, 8, 14, 30, 24, 24, 30, 33, 33, 39],
+        y=[6, 8, 17, 17, 21, 21, 17, 17, 21, 21, 17, 21, 21],
+        text=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"],
+        mode="text",
+    ))
+
     fig.update_xaxes(fixedrange=True, dtick=1, showgrid=False)
     fig.update_yaxes(fixedrange=True, dtick=1, showgrid=False)
 
     fig.update_layout(
+        showlegend=False,
         autosize=False,
         width=1000,
         height=700,
