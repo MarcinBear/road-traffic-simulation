@@ -8,11 +8,6 @@ import dash_table
 import pandas as pd
 import io
 from base64 import b64encode
-from rq import Queue
-from worker import conn
-
-q = Queue(connection=conn)
-result = q.enqueue(sm.simulation, 'http://heroku.com')
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
