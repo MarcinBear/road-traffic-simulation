@@ -83,6 +83,22 @@ app.layout = html.Div(id="page", children=[
                                 id="input_T", type="number", placeholder=100, value=100,
                                 min=1, max=5000, step=1,
                                     ),
+                            html.Label(
+                                "Traffic intensity", style={'font-size': '20px',
+                                                            'margin-top': '20px',
+                                                            'margin-bottom': '10px'},
+
+                                title='Responsible for the intensity of the appearance of new cars. \n '
+                                      'Note that high intensity can slow down computation considerably!'
+                            ),
+                            dcc.Slider(
+                                id='traffic_intensity',
+                                min=1,
+                                max=50,
+                                step=None,
+                                marks={num: str(num) for num in range(5, 51, 5)},
+                                value=5
+                            )
                         ]),
                         html.Div(id="input_dir1_parent", children=[
                             table,
@@ -125,16 +141,21 @@ def parse_contents(contents, filename):
               Input('upload', 'contents'),
               State('upload', 'filename'),
               State('input_T', 'value'),
+              State('traffic_intensity', 'value'),
               State('table-parameters', 'data'))
-def simulate(n, file_content, filename, T, params):
+def simulate(n, file_content, filename, T, intensity, params):
     ctx = dash.callback_context
     if ctx.triggered[0]['prop_id'] == 'upload.contents':
+        # print('start loading')
         df = parse_contents(file_content, filename)
+        # print('parsed')
         traffic = df['traffic'].to_list()
         light_colors = df['light_colors'].to_list()
         new_fig = build_figure(traffic, light_colors)
+        # print('figure built')
     else:
-        traffic, light_colors = sm.simulation(int(T), params)
+        # print('start simulating')
+        traffic, light_colors = sm.simulation(int(T), 50/intensity, params)
         new_fig = build_figure(traffic, light_colors)
     return dcc.Graph(figure=new_fig, id=f'live-graph_{time.time()}', animate=True), \
         pd.DataFrame(traffic).to_json(date_format='iso', orient='split'), time.time(), '0', '0'
@@ -142,6 +163,7 @@ def simulate(n, file_content, filename, T, params):
 
 @app.callback(Output('graph2_parent', 'children'), Input('chain_analysis', 'data'), State('simulation_state', 'data'))
 def build_analysis(simulation_finished, traffic):
+    # print("starting analysis")
     if traffic:
         traffic = pd.read_json(traffic, orient='split')
         frames = traffic.values
@@ -181,9 +203,9 @@ def build_analysis(simulation_finished, traffic):
         fig4 = go.Figure()
         fig4.add_trace(go.Histogram2d(
             x=x_c, y=y_c, autobinx=False,
-            xbins=dict(start=0, end=42, size=1),
+            xbins=dict(start=1, end=41, size=1),
             autobiny=False,
-            ybins=dict(start=0, end=29, size=1),
+            ybins=dict(start=1, end=28, size=1),
             colorscale=[[0.00, "rgb(229,236,246)"],
                         [0.11, "rgb(171,217,233)"],
                         [0.22, "rgb(254,224,144)"],
@@ -193,12 +215,14 @@ def build_analysis(simulation_finished, traffic):
         )
         )
         fig4.update_layout(width=1000, height=450, margin=dict(t=30))
+        # print("analyzed")
         return [dcc.Graph(figure=fig3), dcc.Graph(figure=fig4)]
     else:
         fig3 = go.Figure()
         fig4 = go.Figure()
         fig3.update_layout(width=1000, height=450)
         fig4.update_layout(width=1000, height=450)
+        # print("analyzed")
         return [dcc.Graph(figure=fig3), dcc.Graph(figure=fig4)]
 
 
@@ -218,7 +242,6 @@ def fill_zeros(data):
               Input('download', 'n_clicks'),
               Input('simulation_state', 'data'))
 def load_graph(graph, n, traffic):
-    # traffic = pd.read_json(traffic, orient='split')
     fig_ = go.Figure(graph['props']['figure'])
     buffer = io.StringIO()
     fig_.write_html(buffer)

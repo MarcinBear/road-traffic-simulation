@@ -3,7 +3,7 @@ import numpy as np
 from utils import *
 
 
-def simulation(T, params):
+def simulation(T, intensity_scale, params):
 
     up, down, right, left = [0, 1], [0, -1], [1, 0], [-1, 0]
     town_map = Grid(50, 50)
@@ -65,15 +65,15 @@ def simulation(T, params):
     lights = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13]
 
     for i in range(7):
-        arrivals[roads[i]] = generate_arrivals(lambdas[i], T)
+        arrivals[roads[i]] = generate_arrivals(lambdas[i], T, scale=intensity_scale)
 
-    for t in range(T):  # ************* MAIN LOOP ************* #
+    for t_ in range(T):  # ************* MAIN LOOP ************* #
 
         for intersection in intersections:
             intersection.tick()
 
         for road in roads:
-            if t == arrivals[road][0]:
+            while t_ == arrivals[road][0]:
                 cars.append(Car(*car_models[road]))
                 arrivals[road] = np.delete(arrivals[road], 0)
 
@@ -116,7 +116,7 @@ def simulation(T, params):
                             car.direction = new_direction
                             car.move()
 
-                        elif current_position == (35, 20) and current_direction == down:  # TODO more efficient if
+                        elif current_position == (35, 21) and current_direction == down:  # TODO more efficient if
                             car.direction = t12.new_direction()
                         else:
                             car.wait()
