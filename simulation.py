@@ -1,5 +1,3 @@
-import numpy as np
-
 from utils import *
 
 
@@ -22,6 +20,7 @@ def simulation(T, intensity_scale, params):
 
     lambdas = [lam1, lam2, lam3, lam4, lam5, lam6, lam7]
     roads = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    green_or_red = {True: "#17a323", False: "#f55d67"}  # used for conditioning if light is green, e.g. colors.append(green_or_red[light.green])
     cars = []
     arrivals = {}
     states = []
@@ -60,8 +59,8 @@ def simulation(T, intensity_scale, params):
     S4 = Intersection([t11, t12, t13])
     intersections = [S1, S2, S3, S4]
 
-    lights_by_position = {(12, 5): t1, (10, 7): t2,  (12, 18): t3, (10, 18): t4, (10, 20): t5, (12, 20): t6, (28, 18): t7,
-                          (26, 18): t8, (26, 20): t9, (28, 20): t10, (35, 18): t11, (35, 20): t12, (37, 20): t13}
+    lights_by_position = {(12, 4): t1, (10, 8): t2,  (12, 17): t3, (9, 18): t4, (10, 21): t5, (13, 20): t6, (28, 17): t7,
+                          (25, 18): t8, (26, 21): t9, (29, 20): t10, (34, 18): t11, (35, 21): t12, (38, 20): t13}
     lights = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13]
 
     for i in range(7):
@@ -92,43 +91,29 @@ def simulation(T, intensity_scale, params):
                     car.bye_bye()
 
                 else:
-                    if current_position in lights_by_position:  # NOTE: if car
+                    if current_position in lights_by_position:  # make sure that the car does not hit the wrong point...
                         if lights_by_position[current_position].green:
+                            car.move()
                             new_direction = lights_by_position[current_position].new_direction()
                             next_x = x + new_direction[0]
                             next_y = y + new_direction[1]
                             if np.cross(current_direction, new_direction) == 1:  # turning left?
                                 car.move()
                                 car.move()
-                            elif current_direction == [-u for u in new_direction]:  # TODO one if below
+                            elif current_direction == [-u for u in new_direction]:  # going back?
                                 car.move()
-                                if car.direction == up:
-                                    car.direction = left
-                                elif car.direction == down:
-                                    car.direction = right
-                                elif car.direction == left:
-                                    car.direction = down
-                                elif car.direction == right:
-                                    car.direction = up
+                                car.direction = -np.cross(current_direction + [0], [0, 0, 1])[:2]  # semi-inverse cross product. Need to extend vectors to 3d for a while
                                 car.move()
                                 car.move()
 
                             car.direction = new_direction
                             car.move()
 
-                        elif current_position == (35, 21) and current_direction == down:  # TODO more efficient if
-                            car.direction = t12.new_direction()
-                        else:
-                            car.wait()
-
                     if town_map.grid[next_x, next_y] not in (1, car.direction):  # collision check
                         car.move()
                         town_map.set_one(next_x, next_y)
-                    else:  # collision
-                        car.wait()
 
         states.append([car.position() for car in cars])
-
         town_map.update(states[-1])
 
         for light in lights:
@@ -137,10 +122,7 @@ def simulation(T, intensity_scale, params):
 
         new_colors = []
         for light in lights:
-            if light.green:
-                new_colors.append("#17a323")
-            else:
-                new_colors.append("#f55d67")
+            new_colors.append(green_or_red[light.green])
         light_colors.append(new_colors)
 
     return states, light_colors

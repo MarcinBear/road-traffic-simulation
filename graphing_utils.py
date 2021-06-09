@@ -124,7 +124,7 @@ def build_figure(traffic, light_colors, add_frames=True):
                                             None,
                                             {"frame": {"duration": 100, "redraw": False},
                                              "fromcurrent": True,
-                                             "transition": {"duration": 10000}}
+                                             "transition": {"duration": 1000}}
                                             ]
                                       ),
                              {
