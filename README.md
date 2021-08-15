@@ -1,7 +1,7 @@
-# road-traffic-simulation 🚦🚗 🟦🟦🟦
+# road-traffic-simulation 🚦🟦🟦🟦
 ---
 
-### Dash app designed for 
+### Dash app designed for simulations of a fictional road traffic (on a fixed map) based on inhomogeneous Poisson processes.
 
 ❯❯❯❯❯  **App deployed on Heroku: https://road-traffic-simulation.herokuapp.com/** *(Note: it may take a while for the app to wake up)*
 
