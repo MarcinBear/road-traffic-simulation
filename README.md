@@ -16,8 +16,11 @@
 <p align="center">website screenshot<p>
   
 ---
+  
+Each beginning of the road marked with a capital letter generates new cars at the arrival moments of the corresponding inhomogeneous poisson process. Intensity functions of processes are listed below. 
+  
+* `λ₁(t) = 0.8 + 0.8 * sin(t/2)`
 
-* `λ₁(t) = 0.8 + 0.8 * sin(t/2)`  
 * `λ₂(t) = exp((2 * sin(t/12 + 3) - 0.9)^3)`
  
 * `λ₃(t) = 0.5`
