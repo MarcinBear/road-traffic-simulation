@@ -1,4 +1,4 @@
-# road-traffic-simulation 🚗 🟦🟦🟦
+# road-traffic-simulation 🚦🚗 🟦🟦🟦
 ---
 
 ### Dash app designed for 
@@ -7,12 +7,12 @@
 
 ---
 
-![app_screenshot_error](images/website_sreenshot1.png "app screenshot")
+![app_screenshot_error](images/website_screenshot1.png "app screenshot")
 <p align="center">website screenshot<p>
   
 ---
 
-![app_screenshot2_error](images/website_sreenshot2.png "app screenshot 2")
+![app_screenshot2_error](images/website_screenshot2.png "app screenshot 2")
 <p align="center">website screenshot<p>
   
 ---
