@@ -17,7 +17,7 @@
   
 ---
   
-Each beginning of the road marked with a capital letter generates new cars at the arrival moments of the corresponding inhomogeneous poisson process. Intensity functions of processes are listed below. 
+Each beginning of the road marked with a capital letter generates new cars at the arrival moments¹ of the corresponding inhomogeneous poisson process. Intensity functions of processes are listed below. 
   
 * `λ₁(t) = 0.8 + 0.8 * sin(t/2)`
 
@@ -33,6 +33,7 @@ Each beginning of the road marked with a capital letter generates new cars at th
   
 * `λ₇(t) = 0.3 + 0.3 * sin(4 * sin(t/2))`
 
+[¹] One simulation step is one time unit, therefore we cannot generate new cars exactly at the arrivals moments. To keep time discrete, we generate new cars at moments that are the values of the function `F(t) = round(50t / k - 50 / k * t₁)`, where `t` is the exact arrival moment and t₁ is the first arrival moment, `k` is the global parameter of traffic intensity that can be easily changed with the slider on the page.
 ---
 
  ### Parameters
