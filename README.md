@@ -34,7 +34,8 @@ Each beginning of the road marked with a capital letter generates new cars at th
 * `λ₇(t) = 0.3 + 0.3 * sin(4 * sin(t/2))`
 
 
-One simulation step is one time unit, therefore we cannot generate new cars exactly at the arrivals moments. To keep time discrete, we generate new cars at moments that are the values of the function `F(t) = round(50t / k - 50 / k * t₁)`, where `t` is the exact arrival moment, `t₁` is the first arrival moment and `k` is the global parameter of traffic intensity that can be easily changed with the slider on the page.
+¹ One simulation step is one time unit, therefore we cannot generate new cars exactly at the arrivals moments. To keep time discrete, we generate new cars at moments that are the values of the function `F(t) = round(50t / k - 50 / k * t₁)`, where `t` is the exact arrival moment, `t₁` is the first arrival moment and `k` is the global parameter of traffic intensity that can be easily changed with the slider on the page.
+
 ---
 
  ### Parameters
