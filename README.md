@@ -16,6 +16,14 @@
 <p align="center">website screenshot<p>
   
 ---
+
+### Running simulation
+  
+After setting the desired parameters, click the "run quick simulation" button and wait until the text "updating" disappears from the tab title in the browser. Due to the complexity of calculations, it is recommended to set a relatively low simulation time and low traffic intensity.
+  
+---
+  
+### Generating new cars
   
 Each beginning of the road marked with a capital letter generates new cars at the arrival moments¹ of the corresponding inhomogeneous poisson process. Intensity functions of processes are listed below. 
   
@@ -49,3 +57,11 @@ For each traffic light, we can change the following parameters
 * P(🢁) - probability of selecting the "up" direction by a passing car. Similarly other directions.
  
  ---
+  
+ ### Analysis
+  
+In the analysis tab, we can see two graphs: one is the number of cars against time (relative to different road sections), the other is a heat map showing the total time when a given field was occupied by a car.
+
+---
+  
+  
