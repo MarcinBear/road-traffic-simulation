@@ -46,6 +46,6 @@ For each traffic light, we can change the following parameters
 
 * T(🔴) - time until the next green light comes on after the one in question goes out
 
-* P(🢁) - probability of selecting the "up" direction. Similarly other directions.
+* P(🢁) - probability of selecting the "up" direction by a passing car. Similarly other directions.
  
  ---
